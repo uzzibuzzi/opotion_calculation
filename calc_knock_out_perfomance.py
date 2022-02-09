@@ -62,7 +62,8 @@ class KoCalc:
         
         
     def valueOption(self,value):
-        self.earning=((value-self.KnockOut)*0.1)-self.optionPrice
+        self.calc()
+        self.earning=100+((((value-self.KnockOut)*0.1)-self.optionPrice)/(self.optionPrice))*100
         if (value < self.KnockOut):
             self.earning=0
         return self.earning
@@ -77,17 +78,12 @@ class KoCalc:
         y_value=[]
         for a in range(int(self.StockPrice*(1-(band/100))),int(self.StockPrice*(1+(band/100))),1):
                 x_value.append(a)
-                y_value.append(kb.valueOption(a))
+                y_value.append(self.valueOption(a))
         plt.scatter(x_value, y_value)        
         
 kb=KoCalc(87.2)
-kb.setTarget(100)
-kb.set_KO(77)
-kb.calc()
 
-kb.findOption()
+kb.set_KO(80)
 
-print(kb.valueOption(89))
-kb.optionPrice
-kb.KnockOut
-kb.draw_earning(50)
+kb.draw_earning(10)
+kb.earning
