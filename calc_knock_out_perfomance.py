@@ -72,7 +72,13 @@ class KoCalc:
         print("stop loss ",self.StockLimit)
         print(StockPrice,KnockOut,KoPercent)
         
-        
+    def draw_earning(self,band):
+        x_value=[]
+        y_value=[]
+        for a in range(int(self.StockPrice*(1-(band/100))),int(self.StockPrice*(1+(band/100))),1):
+                x_value.append(a)
+                y_value.append(kb.valueOption(a))
+        plt.scatter(x_value, y_value)        
         
 kb=KoCalc(87.2)
 kb.setTarget(100)
@@ -84,18 +90,4 @@ kb.findOption()
 print(kb.valueOption(89))
 kb.optionPrice
 kb.KnockOut
-
-
-earningList=[]
-for i in [77,80,84,88,90]:
-    print(kb.valueOption(i))
-    
-    
-stockprize=77    
-x_value=[]
-y_value=[]
-for a in range(int(stockprize*0.8),int(stockprize*1.2),1):
-        x_value.append(a)
-        y_value.append(kb.valueOption(a))
-        
-plt.scatter(x_value, y_value)
+kb.draw_earning(50)
