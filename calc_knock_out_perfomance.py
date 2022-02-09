@@ -17,7 +17,10 @@ KnockOut=StockPrice*0.65                #meist so 30 % diff
 
 
 
+
 lossValue=0.8               # stop loss limit ca 40%
+
+KoPercent=(StockPrice-KnockOut)/StockPrice*100
 
 
 optionPrice=(StockPrice-KnockOut)*0.1
@@ -34,6 +37,8 @@ StockLimit=10*(optionPrice*lossValue+KnockOut*0.1)
 earning=((target_value-KnockOut)*0.1)-optionPrice
 
 Winpercent=100*(earning/optionPrice)
+
+print("your checking stockprize {:.2f} and KO {:.2f} difference is  {:.1f}%".format(StockPrice,KnockOut,KoPercent))
 
 print("prize for option {:.2f} first re order {:.2f}  second reorder {:.2f} ".format(optionPrice,optionPrice*0.95,optionPrice*0.9))
 
