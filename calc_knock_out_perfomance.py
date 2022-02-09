@@ -5,6 +5,9 @@ Created on Mon Jul 26 11:43:20 2021
 @author: vollmera
 """
 import matplotlib.pyplot as plt
+from matplotlib.offsetbox import AnchoredText
+
+
 StockPrice=87
 target_value=88
 KnockOut=77#StockPrice*0.65                #meist so 30 % diff
@@ -42,7 +45,7 @@ class KoCalc:
     def __init__(self,price):
         self.StockPrice=price       
         self.KnockOut=self.StockPrice*0.65
-        self.lossValue=0.6
+        self.lossValue=0.65
         self.targetValue=self.StockPrice*1.1
         
         
@@ -69,6 +72,7 @@ class KoCalc:
         return self.earning
     
     def findOption(self):
+        print("Option to buy",self.optionPrice)
         print("KO ",self.KnockOut)
         print("stop loss ",self.StockLimit)
         print(StockPrice,KnockOut,KoPercent)
@@ -79,11 +83,19 @@ class KoCalc:
         for a in range(int(self.StockPrice*(1-(band/100))),int(self.StockPrice*(1+(band/100))),1):
                 x_value.append(a)
                 y_value.append(self.valueOption(a))
+        plt.axhline(y=100, color='g', linestyle='-')
+        plt.axvline(x=self.StockLimit,color="r")
+        plt.axvline(x=self.targetValue,color="g") 
+       # plt.text(0,0,"hgjj",verticalalignment='top')
         plt.scatter(x_value, y_value)        
         
-kb=KoCalc(87.2)
+        
+        
+kb=KoCalc(100)
 
-kb.set_KO(80)
+kb.set_KO(60)
+kb.setTarget(115)
+kb.draw_earning(15)
 
-kb.draw_earning(10)
-kb.earning
+kb.valueOption(110)
+kb.findOption()
