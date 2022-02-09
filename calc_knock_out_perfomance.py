@@ -4,6 +4,7 @@ Created on Mon Jul 26 11:43:20 2021
 
 @author: vollmera
 """
+import matplotlib.pyplot as plt
 StockPrice=87
 target_value=88
 KnockOut=77#StockPrice*0.65                #meist so 30 % diff
@@ -36,11 +37,6 @@ print("win  {:.1f}%  and risk {:.1f}% reward at {:.1f}".format(Winpercent,100*(1
 # hier mus nioch richtig gerechent werden was ist riskio und chance möglihckeit
 
 
-22/20
-
-Winpercent/(((optionPrice-optionPrice*lossValue)/optionPrice)*100)
-
-
 
 class KoCalc:
     def __init__(self,price):
@@ -52,19 +48,54 @@ class KoCalc:
         
     def setTarget(self,target):
         self.targetValue=target
+    
+    def set_KO(self,target):
+        self.KnockOut=target
         
     def calc(self):
         self.KoPercent=((self.StockPrice-self.KnockOut)/self.StockPrice)*100
         self.optionPrice=(self.StockPrice-self.KnockOut)*0.1
         self.sellIt_undelyingAt=max(self.StockPrice*0.7,self.KnockOut)
         self.OptionLossLimit=(self.sellIt_undelyingAt-self.KnockOut)*0.1
-  
-    def findOption(self):
-        print(self.KnockOut)) 
-        
-  
-        
-kbx=KoCalc(87)
+        # stock limit must be checked for ko and max choosen loss value
+        self.StockLimit=10*(self.optionPrice*self.lossValue+self.KnockOut*0.1)  # sell at latest at loss value 
         
         
+    def valueOption(self,value):
+        self.earning=((value-self.KnockOut)*0.1)-self.optionPrice
+        if (value < self.KnockOut):
+            self.earning=0
+        return self.earning
     
+    def findOption(self):
+        print("KO ",self.KnockOut)
+        print("stop loss ",self.StockLimit)
+        print(StockPrice,KnockOut,KoPercent)
+        
+        
+        
+kb=KoCalc(87.2)
+kb.setTarget(100)
+kb.set_KO(77)
+kb.calc()
+
+kb.findOption()
+
+print(kb.valueOption(89))
+kb.optionPrice
+kb.KnockOut
+
+
+earningList=[]
+for i in [77,80,84,88,90]:
+    print(kb.valueOption(i))
+    
+    
+stockprize=77    
+x_value=[]
+y_value=[]
+for a in range(int(stockprize*0.8),int(stockprize*1.2),1):
+        x_value.append(a)
+        y_value.append(kb.valueOption(a))
+        
+plt.scatter(x_value, y_value)
