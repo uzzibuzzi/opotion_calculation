@@ -53,6 +53,7 @@ plt.plot(S, puts, label='Put Value')
 plt.xlabel('$S_0$')
 plt.ylabel(' Value')
 plt.legend()
+plt.show()
 
 
 """
@@ -74,7 +75,7 @@ plt.plot(Sigmas, puts, label='Put Value')
 plt.xlabel('$\sigma$')
 plt.ylabel(' Value')
 plt.legend()
-
+plt.show()
 
 """
 Effect of Time on Black-Scholes Price
@@ -100,7 +101,7 @@ plt.plot(T, calls, label='Call Value')
 plt.plot(T, puts, label='Put Value')
 
 #plt.plot(T, p_calls, label='gradient Value')
-
+plt.show()
 
 plt.xlabel('$T$ in years')
 plt.ylabel(' Value')
