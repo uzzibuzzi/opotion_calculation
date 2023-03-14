@@ -10,10 +10,10 @@ import numpy as np
 
 
 
-StockPrice=132
-target_value=170
-KnockOut=StockPrice*0.62                #meist so 30 % diff
-lossValue=0.9               # stop loss limit ca 40%
+StockPrice=9.88
+target_value=12  
+KnockOut=StockPrice*0.7                #meist so 30 % diff
+lossValue=0.85               # stop loss limit ca 40%
 
 
 
@@ -24,8 +24,8 @@ class KoCalc:
     def __init__(self,price):
         self.StockPrice=price       
         self.KnockOut=self.StockPrice*0.65
-        self.lossValue=0.9
-        self.targetValue=170
+        self.lossValue=0.7
+        self.targetValue=120
         self.optionRatio=0.1
         
         
@@ -73,14 +73,20 @@ class KoCalc:
         ax.axhline(y=100, color='g', linestyle='-')
         ax.axvline(x=self.StockLimit,color="r",alpha=0.5)
         ax.axvline(x=self.targetValue,color="g") 
-        ax.text(80,240," Option Price {:.2f} \n K.o Percent {:.2f}\n loss Limit {:.2f}% ".format(self.optionPrice,self.KoPercent,self.sellPercent*100),horizontalalignment='left',verticalalignment='top',fontsize=14, color='b')
+     #   ax.text(80,240," Option Price {:.2f} \n K.o Percent {:.2f}\n loss Limit {:.2f}% ".format(self.optionPrice,self.KoPercent,self.sellPercent*100),horizontalalignment='left',verticalalignment='top',fontsize=14, color='b')
+        text=" Option Price {:.2f} \n K.o Percent {:.2f}\n loss Limit {:.2f}% ".format(self.optionPrice,self.KoPercent,self.sellPercent*100)
+        
+        ax.annotate(text, xy=(0.2, 0.85), xycoords='axes fraction', fontsize=12,
+            ha='center', va='center')
 
         ax.scatter(x_value, y_value)    
         ax.grid(which='both')
         xmin, xmax = ax.get_xlim()
         ymin, ymax = ax.get_ylim()
+        plt.show()
+
         #ylim(0,ymax)
-        xmajor_ticks = np.arange(xmin,xmax, 20)
+"""        xmajor_ticks = np.arange(xmin,xmax, 20)
         xminor_ticks = np.arange(xmin,xmax, 5)
         ymajor_ticks = np.arange(ymin,ymax, 20)
         yminor_ticks = np.arange(ymin,ymax, 5)
@@ -95,8 +101,7 @@ class KoCalc:
         # Or if you want different settings for the grids:
         ax.grid(which='minor', alpha=0.2)
         ax.grid(which='major', alpha=0.5)
-        
-        plt.show()
+"""        
         
 kb=KoCalc(StockPrice)
 
@@ -105,12 +110,12 @@ kb.setTarget(target_value)
 
 
 
-kb.draw_earning(50)
+kb.draw_earning(45)
 print("Stocklimit:",kb.StockLimit)
 print("Stockprivcce : ",kb.StockPrice)
 print("ko value : ",kb.KnockOut)
 
-print(" loss in  : ",(kb.StockPrice- kb.StockLimit)/kb.StockPrice)
+print(" loss in  : {:.1f}% ".format(100*(kb.StockPrice- kb.StockLimit)/kb.StockPrice))
 #print(kb.OptionLossLimit)
 
 

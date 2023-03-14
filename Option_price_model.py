@@ -12,9 +12,9 @@ N = norm.cdf
 
 
 ticker="BAYN.DE"
-strike =55
+strike =60
 riskFreeRate=0.1
-kurs = 51
+kurs = 45.45
 restTime = 1
 sigma = 0.3
 
@@ -112,7 +112,7 @@ plt.legend()
 """
 
 
-import pandas_datareader.data as web
+#import pandas_datareader.data as web
 import pandas as pd
 import datetime as dt
 from datetime import date
